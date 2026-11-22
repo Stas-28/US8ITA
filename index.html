@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US8ITA — Радиолюбительский портал и авторский софт</title>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --sub-bg: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --accent: #d97706;
+            --accent-hover: #b45309;
+            --blue: #0284c7;
+            --green: #16a34a;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(rgba(15, 23, 42, 0.52), rgba(15, 23, 42, 0.68)),
+                        url('img/header-bg.jpg') center/cover no-repeat;
+            background-color: #1e293b;
+            border-bottom: 4px solid var(--accent);
+            padding: 48px 20px;
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+        }
+        .callsign {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 3.3em;
+            font-weight: bold;
+            color: #fbbf24;
+            letter-spacing: 6px;
+            margin: 0;
+        }
+        .subtitle {
+            color: #f1f5f9;
+            font-size: 1.1em;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        nav {
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 7px 16px;
+            border-radius: 6px;
+            transition: 0.2s;
+            font-size: 0.95em;
+        }
+        nav a:hover {
+            background-color: var(--accent);
+            color: #ffffff;
+        }
+        .container {
+            max-width: 1020px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        h2 {
+            border-left: 5px solid var(--accent);
+            padding-left: 14px;
+            margin-top: 45px;
+            margin-bottom: 22px;
+            font-size: 1.55em;
+            color: #0f172a;
+        }
+        .prog-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+        }
+        .prog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+        .prog-title-wrap h3 {
+            margin: 0;
+            color: var(--blue);
+            font-size: 1.35em;
+        }
+        .prog-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.82em;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 5px;
+            margin-top: 6px;
+            font-family: monospace;
+        }
+        .prog-body {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .prog-desc {
+            flex: 1;
+            min-width: 300px;
+            color: var(--text-main);
+            font-size: 0.97em;
+        }
+        .prog-desc p { margin-top: 0; }
+        .prog-desc ul {
+            color: var(--text-muted);
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        .prog-desc li { margin-bottom: 8px; }
+        .prog-desc li strong { color: var(--text-main); }
+        .prog-screen {
+            width: 340px;
+            max-width: 100%;
+            flex-shrink: 0;
+            background: var(--sub-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+        }
+        .prog-screen img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            display: block;
+            cursor: zoom-in;
+            transition: transform 0.2s;
+        }
+        .prog-screen img:hover { transform: scale(1.02); }
+        .prog-screen span {
+            display: block;
+            font-size: 0.78em;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+        .btn-download {
+            background-color: var(--accent);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 11px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+        .btn-download:hover { background-color: var(--accent-hover); }
+        .wiring-box {
+            margin-top: 20px;
+            background: var(--sub-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .wiring-title {
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        .wiring-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-family: monospace;
+            font-size: 0.88em;
+        }
+        .wiring-col {
+            flex: 1;
+            min-width: 210px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px;
+        }
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+        }
+        .rules-note {
+            background: #fffbeb;
+            border-left: 4px solid var(--accent);
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 0.92em;
+            color: #78350f;
+            margin-bottom: 18px;
+        }
+        .qsl-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--blue);
+            border-radius: 10px;
+            padding: 22px 25px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .btn-copy {
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: 0.2s;
+        }
+        .btn-copy:hover { background: #0369a1; }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.88);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            cursor: zoom-out;
+        }
+        .modal img {
+            max-width: 95%;
+            max-height: 90%;
+            border-radius: 8px;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 90;
+        }
+        .scroll-top:hover { background: var(--accent-hover); }
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #94a3b8;
+            font-size: 0.9em;
+            margin-top: 60px;
+            background: #1e293b;
+        }
+    </style>
+</head>
+<body id="top">
+
+<header>
+    <div class="callsign">US8ITA</div>
+    <div class="subtitle">Авторский софт для радиолюбителей • Расчет антенн • Цифровая связь</div>
+</header>
+
+<nav>
+    <a href="#software">Программы (5)</a>
+    <a href="#market">Барахолка (Куплю / Продам)</a>
+    <a href="#forum">Форум и вопросы</a>
+    <a href="#contacts">Контакты / QSL</a>
+</nav>
+
+<div class="container">
+    <section id="software">
+        <h2>Каталог авторских программ (Download)</h2>
+
+        <div class="prog-card">
+            <div class="prog-header">
+                <div class="prog-title-wrap">
+                    <h3>1. AntennaCalc_US8ITA — Калькулятор Диполя и Вертикала GP</h3>
+                    <span class="prog-badge">Windows • Portable • ~12 МБ</span>
+                </div>
+                <a href="https://github.com/Stas-28/US8ITA/releases/download/v1.0/AntennaCalc_US8ITA.zip" class="btn-download" target="_blank">Скачать (ZIP)</a>
+            </div>
+            <div class="prog-body">
+                <div class="prog-desc">
+                    <p>Наглядная утилита для быстрого расчета геометрических размеров классических проволочных и штыревых антенн — полуволнового диполя (λ/2) и четвертьволнового вертикала GP (λ/4).</p>
+                    <ul>
+                        <li><strong>Выбор диапазона в 1 клик:</strong> готовые пресеты для 80м (3.65 МГц), 40м (7.10 МГц), 20м (14.15 МГц), 15м (21.20 МГц), 10м (28.50 МГц), 2м (145.5 МГц) и 70см (433.5 МГц), а также ручной ввод любой частоты.</li>
+                        <li><strong>Учет коэффициента укорочения:</strong> точная подстройка коэффициента (0.83 – 0.98) под толщину и изоляцию полотна.</li>
+                        <li><strong>Готовые чертежи:</strong> расчет длины волны, общей длины, плеч диполя, штыря и противовесов (с углом наклона 45°–90°) с выводом размеров прямо на схему антенны.</li>
+                    </ul>
+                </div>
+                <div class="prog-screen">
+                    <img src="img/dipol.png" alt="Скриншот AntennaCalc_US8ITA" onclick="openModal(this.src)">
+                    <span>Нажмите на картинку для увеличения</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="prog-card">
+            <div class="prog-header">
+                <div class="prog-title-wrap">
+                    <h3>2. YagiCalc_US8ITA — Калькулятор антенны Yagi-Uda (3–5 элементов)</h3>
+                    <span class="prog-badge">Windows • Portable • ~12 МБ</span>
+                </div>
+                <a href="https://github.com/Stas-28/US8ITA/releases/download/v1.0/YagiCalc_US8ITA.zip" class="btn-download" target="_blank">Скачать (ZIP)</a>
+            </div>
+            <div class="prog-body">
+                <div class="prog-desc">
+                    <p>Калькулятор для проектирования направленных антенн «волновой канал» (Yagi-Uda) на диапазоны от 80м до 70см с расчетом согласующего устройства.</p>
+                    <ul>
+                        <li><strong>Гибкая конфигурация:</strong> выбор количества элементов (3, 4 или 5 элементов) и волнового сопротивления кабеля питания (50 Ом или 75 Ом).</li>
+                        <li><strong>Полная геометрия траверсы:</strong> вычисление длины рефлектора (R), активного вибратора (DE), директоров (D1–D3), расстояний между элементами и минимальной длины траверсы.</li>
+                        <li><strong>Схема согласования:</strong> расчет четвертьволнового трансформатора из двух параллельных отрезков кабеля 75 Ом с учетом коэффициента укорочения кабеля и трубки.</li>
+                    </ul>
+                </div>
+                <div class="prog-screen">
+                    <img src="img/yagi.png" alt="Скриншот YagiCalc_US8ITA" onclick="openModal(this.src)">
+                    <span>Нажмите на картинку для увеличения</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="prog-card">
+            <div class="prog-header">
+                <div class="prog-title-wrap">
+                    <h3>3. J-Pole Calc_US8ITA — Калькулятор J-антенны</h3>
+                    <span class="prog-badge">Windows • Portable • ~12 МБ</span>
+                </div>
+                <a href="https://github.com/Stas-28/US8ITA/releases/download/v1.0/JPoleCalc_US8ITA.zip" class="btn-download" target="_blank">Скачать (ZIP)</a>
+            </div>
+            <div class="prog-body">
+                <div class="prog-desc">
+                    <p>Специализированный калькулятор для изготовления популярной всенаправленной антенны J-Pole из трубки, провода или двухпроводной линии.</p>
+                    <ul>
+                        <li><strong>Диапазоны УКВ и Си-Би:</strong> пресеты для CB (27.20 МГц), 6м (50.15 МГц), 2м (145.50 МГц), 70см (433.50 МГц), LPD (434.075 МГц) и PMR (446.05 МГц) + ручной ввод частоты.</li>
+                        <li><strong>Точные размеры в мм и см:</strong> расчет длинного колена (A), согласующего шлейфа (B), излучателя λ/2 (C), точки запитки 50 Ом (D) и зазора (S).</li>
+                        <li><strong>Схема подключения кабеля:</strong> наглядный чертеж с подсказкой по распайке центральной жилы и оплетки коаксиального кабеля.</li>
+                    </ul>
+                </div>
+                <div class="prog-screen">
+                    <img src="img/jpole.png" alt="Скриншот J-Pole Calc_US8ITA" onclick="openModal(this.src)">
+                    <span>Нажмите на картинку для увеличения</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="prog-card">
+            <div class="prog-header">
+                <div class="prog-title-wrap">
+                    <h3>4. HamLog by US8ITA — Аппаратный журнал радиолюбителя</h3>
+                    <span class="prog-badge">Windows • Portable • ~12 МБ</span>
+                </div>
+                <a href="https://github.com/Stas-28/US8ITA/releases/download/v1.0/HamLog_by_US8ITA.zip" class="btn-download" target="_blank">Скачать (ZIP)</a>
+            </div>
+            <div class="prog-body">
+                <div class="prog-desc">
+                    <p>Легкий и быстрый электронный аппаратный журнал (логгер) для повседневной работы в эфире и полевых выездов.</p>
+                    <ul>
+                        <li><strong>Авторасчет по QTH-локатору:</strong> при вводе квадрата корреспондента программа автоматически определяет страну, дистанцию в километрах и точный азимут от вашего QTH.</li>
+                        <li><strong>Удобный учет QSO:</strong> выбор диапазона, модуляции (SSB, CW, Digi и др.), рапорта RST, заметок, счетчик связей и встроенные часы (UTC / местное время).</li>
+                        <li><strong>Экспорт в ADIF и Excel:</strong> выгрузка проведенных связей в стандартный формат <code>.adi</code> (для LoTW, eQSL, QRZ) и таблицы Excel в один клик.</li>
+                    </ul>
+                </div>
+                <div class="prog-screen">
+                    <img src="img/hamlog.png" alt="Скриншот HamLog US8ITA" onclick="openModal(this.src)">
+                    <span>Нажмите на картинку для увеличения</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="prog-card">
+            <div class="prog-header">
+                <div class="prog-title-wrap">
+                    <h3>5. Радио-Мессенджер US8ITA — Цифровой терминал (MFSK-PRO)</h3>
+                    <span class="prog-badge">Windows • Portable • ~23 МБ</span>
+                </div>
+                <a href="https://github.com/Stas-28/US8ITA/releases/download/v1.0/RadioMessenger.zip" class="btn-download" target="_blank">Скачать (ZIP)</a>
+            </div>
+            <div class="prog-body">
+                <div class="prog-desc">
+                    <p>Программа-пейджер для передачи и приема текстовых сообщений по радиоканалу через звуковую карту ПК и трансивер/радиостанцию (цифровой режим MFSK).</p>
+                    <ul>
+                        <li><strong>Работа через любую звуковую карту:</strong> простой выбор аудиовхода (прием) и аудиовыхода (передача) в интерфейсе программы.</li>
+                        <li><strong>Управление передачей по VOX:</strong> встроенная кнопка <em>«Тест VOX (гудок 1 сек)»</em> для быстрой калибровки порога срабатывания на трансивере или портативной рации.</li>
+                        <li><strong>Удобный чат-терминал:</strong> окно истории принятых и отправленных радиограмм с мгновенной отправкой текста в эфир.</li>
+                    </ul>
+                </div>
+                <div class="prog-screen">
+                    <img src="img/messenger.png" alt="Скриншот Радио-Мессенджер US8ITA" onclick="openModal(this.src)">
+                    <span>Нажмите на картинку для увеличения</span>
+                </div>
+            </div>
+
+            <div class="wiring-box">
+                <div class="wiring-title">Схема подключения к рации со стандартным разъемом Kenwood 2-pin (Baofeng, Quansheng, Kenwood, Wouxun и др.):</div>
+                <div class="wiring-grid">
+                    <div class="wiring-col">
+                        <div style="color:#d97706; font-weight:bold; margin-bottom:6px;">1. Разъем рации (Kenwood K1)</div>
+                        <div style="margin-bottom:5px;">• <strong>Штекер 3.5 мм (верхний):</strong><br>Кольцо (Ring) = <code>MIC+</code><br>Гильза (Sleeve) = <code>GND</code></div>
+                        <div>• <strong>Штекер 2.5 мм (нижний):</strong><br>Кончик (Tip) = <code>SPK+</code><br>Гильза (Sleeve) = <code>GND</code></div>
+                    </div>
+                    <div class="wiring-col">
+                        <div style="color:#0284c7; font-weight:bold; margin-bottom:6px;">2. Соединение с ПК</div>
+                        <div style="margin-bottom:5px;">• <code>MIC+</code> (3.5 мм) ➔ через конденсатор <strong>1–10 мкФ</strong> на <strong>Выход Динамик/Наушники ПК</strong></div>
+                        <div style="margin-bottom:5px;">• <code>SPK+</code> (2.5 мм) ➔ на <strong>Вход Микрофон ПК</strong></div>
+                        <div>• <code>GND</code> (оба штекера) ➔ на <strong>Общий (GND) ПК</strong></div>
+                    </div>
+                    <div class="wiring-col">
+                        <div style="color:#16a34a; font-weight:bold; margin-bottom:6px;">3. Настройка рации</div>
+                        <div style="margin-bottom:5px;">• Включить <strong>VOX</strong> (уровень 1–3)</div>
+                        <div style="margin-bottom:5px;">• Громкость рации: <strong>30–50%</strong></div>
+                        <div>• Проверить кнопкой <em>«Тест VOX»</em></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="market">
+        <h2>Радиолюбительская барахолка (Куплю / Продам / Обмен)</h2>
+        <div class="section-card">
+            <div class="rules-note">
+                <strong>Правила барахолки:</strong> Указывайте ваш позывной, цену и контакты для связи (телефон, Viber/Telegram или email). Неактуальные и старые объявления периодически удаляются администратором US8ITA.
+            </div>
+            <script src="https://giscus.app/client.js"
+                    data-repo="Stas-28/US8ITA"
+                    data-repo-id="R_kgDOV11lAw"
+                    data-category="Барахолка"
+                    data-category-id="DIC_kwDOV11lA84C0PUt"
+                    data-mapping="specific"
+                    data-term="baraholka"
+                    data-strict="0"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="bottom"
+                    data-theme="light"
+                    data-lang="ru"
+                    crossorigin="anonymous"
+                    async>
+            </script>
+        </div>
+    </section>
+
+    <section id="forum">
+        <h2>Форум и обсуждение программ US8ITA</h2>
+        <div class="section-card">
+            <p style="margin-top:0; color:var(--text-muted);">Вопросы по работе калькуляторов антенн, аппаратного журнала HamLog, настройке MFSK-пейджера и предложения по новым функциям:</p>
+            <script src="https://giscus.app/client.js"
+                    data-repo="Stas-28/US8ITA"
+                    data-repo-id="R_kgDOV11lAw"
+                    data-category="General"
+                    data-category-id="DIC_kwDOV11lA84C0UEy"
+                    data-mapping="specific"
+                    data-term="forum"
+                    data-strict="0"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="bottom"
+                    data-theme="light"
+                    data-lang="ru"
+                    crossorigin="anonymous"
+                    async>
+            </script>
+        </div>
+    </section>
+
+    <section id="contacts">
+        <h2>Связь с автором</h2>
+        <div class="qsl-card">
+            <div>
+                <div style="font-weight:bold; font-size:1.1em; color:#0f172a; margin-bottom:4px;">Автор портала: US8ITA</div>
+                <div style="color:var(--text-muted); font-size:0.95em;">По вопросам работы программ, предложениям по доработке и обмену QSL: <strong><a href="mailto:nsl123@i.ua" style="color: var(--blue); text-decoration: none;">nsl123@i.ua</a></strong></div>
+            </div>
+            <button class="btn-copy" onclick="copyEmail()">Скопировать Email</button>
+        </div>
+    </section>
+</div>
+
+<a href="#top" class="scroll-top" title="Наверх">↑</a>
+
+<div id="imgModal" class="modal" onclick="this.style.display='none'">
+    <img id="modalImg" src="" alt="Увеличенный скриншот">
+</div>
+
+<footer>
+    © 2026 Радиолюбительский портал US8ITA. Все права защищены. 73!
+</footer>
+
+<script>
+    function openModal(src) {
+        document.getElementById('modalImg').src = src;
+        document.getElementById('imgModal').style.display = 'flex';
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.getElementById('imgModal').style.display = 'none';
+        }
+    });
+
+    function copyEmail() {
+        navigator.clipboard.writeText('nsl123@i.ua').then(function() {
+            alert('Email nsl123@i.ua скопирован в буфер обмена!');
+        });
+    }
+</script>
+
+</body>
+</html>
